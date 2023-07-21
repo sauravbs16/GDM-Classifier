@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gdm-fe
+spec:
+  type: LoadBalancer
+  selector:
+    name: gdm-fe
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gdm-fe
+  labels:
+    name: gdm-fe
+spec:
+  containers:
+  - name: gdm-fe
+    image: us-central1-docker.pkg.dev/group8-391123/gdm/fe
+    imagePullPolicy: Always
+    command: ["python3"]
+    args: ["gdm_fe.py", "--server_url", "gdm-server:50051"] 
+    ports:
+    - containerPort: 8080
+    resources:
+      requests:
+        memory: "50Mi"
+        cpu: "20m"
+      limits:
+        memory: "250Mi"
+        cpu: "200m"

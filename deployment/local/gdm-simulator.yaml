@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gdm-simulator
+  labels:
+    app: gdm-simulator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gdm-simulator
+  template:
+    metadata:
+      labels:
+        app: gdm-simulator
+    spec:
+      containers:
+      - name: gdm-simulator
+        image: gdm/simulator
+        imagePullPolicy: Never
+        command: ["python3"]
+        args: ["gdm_simulator.py", "--hostname", "gdm-server", "--port", "50051"]
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "20m"
+          limits:
+            memory: "250Mi"
+            cpu: "200m"

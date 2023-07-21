@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gdm-fe
+spec:
+  selector:
+    name: gdm-fe
+  clusterIP: None
+  ports:
+  - name: gdmport # name is not required for single-port Services
+    port: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gdm-fe
+  labels:
+    name: gdm-fe
+spec:
+  containers:
+  - name: gdm-fe
+    image: gdm/fe
+    imagePullPolicy: Never
+    command: ["python3"]
+    args: ["gdm_fe.py", "--server_url", "gdm-server:50051"] 
+    ports:
+    - containerPort: 8080
+    resources:
+      requests:
+        memory: "50Mi"
+        cpu: "20m"
+      limits:
+        memory: "250Mi"
+        cpu: "200m"

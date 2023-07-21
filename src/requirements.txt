@@ -1,0 +1,7 @@
+grpcio
+grpcio-tools
+protobuf
+pymongo
+Flask
+flask-cors
+Flask-Session
