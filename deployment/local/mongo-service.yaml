@@ -11,35 +11,6 @@ spec:
  clusterIP: None
  selector:
    app: mongo
-#---
-#apiVersion: v1
-#kind: PersistentVolumeClaim
-#metadata:
-#  name: mongo-persistent-storage
-#spec:
-#  accessModes:
-#    - ReadWriteOnce
-#  resources:
-#    requests:
-#      storage: 30Gi
-  #storageClassName: standard-rwo
----
-#kind: StorageClass
-#apiVersion: storage.k8s.io/v1
-#metadata:
-#  name: fast
-#  annotations:
-#    storageclass.kubernetes.io/is-default-class: "true"
-#reclaimPolicy: Retain
-#provisioner: example.com/hostpath
-#---
-#kind: StorageClass
-#apiVersion: storage.k8s.io/v1
-#metadata:
-#  name: fast
-#provisioner: kubernetes.io/gce-pd
-#parameters:
-#  type: pd-ssd
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -50,7 +21,7 @@ spec:
     matchLabels:
       app: mongo
   serviceName: "mongo"
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -67,11 +38,6 @@ spec:
           volumeMounts:
            - name: mongo-persistent-storage
              mountPath: /data/db
-        - name: mongo-sidecar
-          image: cvallance/mongo-k8s-sidecar
-          env:
-           - name: MONGO_SIDECAR_POD_LABELS
-             value: "role=mongo,environment=test"
   volumeClaimTemplates:
   - metadata:
       name: mongo-persistent-storage

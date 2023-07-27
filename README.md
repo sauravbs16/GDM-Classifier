@@ -46,9 +46,10 @@ kubectl apply -f deployment/local/gdm-server.yaml
 kubectl apply -f deployment/local/gdm-fe.yaml
 ```
 
-**forward frontend service port to localhost**
+**forward service port to localhost**
 ```
 kubectl port-forward service/gdm-fe 8080:8080
+kubectl port-forward service/mongo-service 27018:27017
 ```
 
 **Optional:** run the simulator
@@ -163,6 +164,6 @@ python src/gdm_simulator.py
 
 **Running the front end**
 ```
-python src/front_end/fe.py
+python src/gdm_fe.py
 ```
 open [localhost:8080](http://localhost:8080) in your browser 

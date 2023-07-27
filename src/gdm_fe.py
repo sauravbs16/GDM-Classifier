@@ -6,6 +6,7 @@ import logging
 import grpc
 import gdm_pb2
 import gdm_pb2_grpc
+from google.protobuf.json_format import MessageToDict
 
 server_url = ""
 parser =  argparse.ArgumentParser(
@@ -92,15 +93,27 @@ def dashboard():
         
         with grpc.insecure_channel(server_url) as channel:
             stub = gdm_pb2_grpc.GdmStub(channel)
-            req = gdm_pb2.GetUserRequest(
+            user = stub.GetUser(gdm_pb2.GetUserRequest(
                 user_id=session.get("user_id")
+            ))
+
+            samples = stub.GetSamples(gdm_pb2.GetSamplesRequest(
+                user_id=session.get("user_id")
+            ))
+            sample = samples.samples.sample[0]
+            logging.info("%s",sample )
+            
+
+            diagnosis = stub.GetDiagnosis( gdm_pb2.GetDiagnosisRequest(
+                user=user.user,
+                sample= sample,
+                )
             )
-            resp = stub.GetUser(req)
         return render_template('dashboard.html',
-                               user_id = resp.user.user_id,
-                               age = resp.user.age,
-                               bmi = resp.user.bmi,
-                               gdm = "False")
+                               user_id = user.user.user_id,
+                               age = user.user.age,
+                               bmi = "{:.2f}".format(user.user.bmi),
+                               gdm = diagnosis.hasGDM)
 
 
 @app.route('/logout')

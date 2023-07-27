@@ -19,7 +19,7 @@ spec:
         image: gdm/simulator
         imagePullPolicy: Never
         command: ["python3"]
-        args: ["gdm_simulator.py", "--hostname", "gdm-server", "--port", "50051"]
+        args: ["gdm_simulator.py", "--hostname", "gdm-server", "--port", "50051", "--interval", "10"]
         resources:
           requests:
             memory: "50Mi"

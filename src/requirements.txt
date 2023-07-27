@@ -5,3 +5,5 @@ pymongo
 Flask
 flask-cors
 Flask-Session
+pandas
+scikit-learn

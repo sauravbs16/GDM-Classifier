@@ -112,7 +112,7 @@ def start_simulation(stub: gdm_pb2_grpc.GdmStub, interval: int):
         sample = gdm_pb2.WriteSampleRequest(
             sample= gdm_pb2.Sample(
             timestamp = time.time_ns(),
-            user_id="team8",
+            user_id=user_id,
             ogtt1h=random.randrange(2, 10) + random.random(),
             ogtt2h=random.randrange(2, 10) + random.random())
         )

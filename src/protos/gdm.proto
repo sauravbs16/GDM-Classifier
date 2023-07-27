@@ -7,6 +7,7 @@ service Gdm {
     rpc SignUp(SignUpRequest) returns (SignUpResponse);
     rpc SignIn(SignInRequest) returns (SignInResponse);
     rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc GetDiagnosis(GetDiagnosisRequest) returns (GetDiagnosisResponse);
 }
 
 enum Ethnicity {
@@ -79,4 +80,13 @@ message GetUserRequest {
 
 message GetUserResponse {
     User user = 1;
+}
+
+message GetDiagnosisRequest{
+    User user = 1;
+    Sample sample = 2;
+}
+
+message GetDiagnosisResponse{
+    bool hasGDM = 1;
 }

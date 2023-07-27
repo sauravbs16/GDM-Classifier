@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor's Dashboard</title>
+  
+  <style>
+    /* Global styles */
+    body {
+      background-image: url("1.jpg");
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Menu bar styles */
+    .menu-bar {
+      background-color: transparent; /* Transparent background for the menu bar */
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .doctor-details {
+      text-align: right;
+    }
+
+    .doctor-details h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #800080; /* Lilac color for the font in the menu bar */
+    }
+
+    /* Box container styles */
+    .box-container {
+      display: flex; /* Make the boxes flex containers */
+      justify-content: space-around; /* Distribute boxes horizontally with space-around */
+      flex-wrap: wrap; /* Allow wrapping to a new line if the boxes don't fit in a single row */
+    }
+
+    /* Box styles */
+    .box {
+      align-items: center;
+      background-color: #b3d9ff; /* Light pastel blue color for boxes */
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      color: #800080; /* Lilac color for the font inside boxes */
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      font-weight: bold;
+      height: 250px; /* Updated height for larger boxes */
+      justify-content: center;
+      margin: 10px;
+      width: calc(30% - 20px); /* Updated width for larger boxes */
+      padding: 10px;
+      margin-left: 20%; /* 20% margin to the left */
+      background-size: cover;
+      background-position: center;
+    }
+
+    .box:hover {
+      background-color: #99ccff; /* Lighter shade on hover */
+    }
+
+    /* Patient-info text styles */
+    .patient-info {
+      text-align: left; /* Align patient details to the left */
+    }
+
+    .patient-info h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #800080; /* Lilac color for patient names */
+    }
+
+    .patient-info p {
+      margin-bottom: 6px;
+    }
+
+    /* Background images for boxes */
+    .box:nth-child(1) {
+      background-image: url("2.jpg");
+    }
+
+    .box:nth-child(2) {
+      background-image: url("2.jpg");
+    }
+
+    .box:nth-child(3) {
+      background-image: url("2.jpg");
+    }
+
+    .box:nth-child(4) {
+      background-image: url("2.jpg");
+    }
+
+    .box:nth-child(5) {
+      background-image: url("2.jpg");
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-bar">
+    <div class="title">
+      <h1 style="color: #800080; font-size: 66px;">GDM Risk Assessment</h1> <!-- Lilac color for the title -->
+    </div>
+    <div class="doctor-details">
+      <h2>Doctor's Name: Dr. John Smith</h2>
+      <p>Specialty: Gynecologist</p>
+      <p>License No: XXXXXXX</p>
+    </div>
+  </div> 
+  <div class="box-container">
+    <!-- Boxes with patient information -->
+    <!-- Add more boxes here if needed -->
+    <div class="box" onclick="navigateToPatientPage(1)">
+      <div class="patient-info">
+        <h3>Name: Emily Johnson</h3>
+        <p>Age: 28</p>
+        <p>Pregnancy Month: 6</p>
+        <p>Last Check-up Date: 2023-07-15</p>
+      </div>
+    </div>
+
+    <div class="box" onclick="navigateToPatientPage(2)">
+      <div class="patient-info">
+        <h3>Name: John Smith</h3>
+        <p>Age: 35</p>
+        <p>Pregnancy Month: N/A</p>
+        <p>Last Check-up Date: 2023-07-10</p>
+      </div>
+    </div>
+
+    <div class="box" onclick="navigateToPatientPage(3)">
+      <div class="patient-info">
+        <h3>Name: Sarah Johnson</h3>
+        <p>Age: 23</p>
+        <p>Pregnancy Month: 4</p>
+        <p>Last Check-up Date: 2023-07-20</p>
+      </div>
+    </div>
+
+    <div class="box" onclick="navigateToPatientPage(4)">
+      <div class="patient-info">
+        <h3>Name: Michael Brown</h3>
+        <p>Age: 31</p>
+        <p>Pregnancy Month: N/A</p>
+        <p>Last Check-up Date: 2023-07-12</p>
+      </div>
+    </div>
+
+    <div class="box" onclick="navigateToPatientPage(5)">
+      <div class="patient-info">
+        <h3>Name: Lisa Davis</h3>
+        <p>Age: 29</p>
+        <p>Pregnancy Month: 8</p>
+        <p>Last Check-up Date: 2023-07-18</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

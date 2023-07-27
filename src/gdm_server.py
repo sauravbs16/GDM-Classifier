@@ -6,6 +6,9 @@ import pymongo
 import gdm_pb2
 import gdm_pb2_grpc
 import argparse
+import pickle
+import pandas as pd
+import os
 
 # TODO: create an RPC that returns row for the classifier
 
@@ -14,6 +17,8 @@ samples_collection_name = "samples"
 user_collection_name = "users"
 gdm_database_name = "gdm"
 
+fn = os.path.join(os.path.dirname(__file__), 'clf.pkl')
+model = pickle.load(open(fn, "rb"))
 
 parser =  argparse.ArgumentParser(
     prog="GDM Server",
@@ -82,6 +87,22 @@ def getDB(db_url:str):
     mongo_client = pymongo.MongoClient(db_url)
     return mongo_client[gdm_database_name]
 
+def getDiagnosis(request: gdm_pb2.GetDiagnosisRequest) -> bool:
+    data = pd.DataFrame({
+        "Age": [request.user.age],
+        "Height": [request.user.height],
+        "Body Mass Index (BMI)": [request.user.bmi],
+        "Obesity": [request.user.obesity],
+        "OGTT1h": [request.sample.ogtt1h],
+        "OGTT2h": [request.sample.ogtt2h],
+        "Ethnicity_GBR": [int(request.user.ethnicity == gdm_pb2.Ethnicity.GBR)],
+        "Ethnicity_IND": [int(request.user.ethnicity == gdm_pb2.Ethnicity.IND)],
+        "Ethnicity_OTH": [int(request.user.ethnicity == gdm_pb2.Ethnicity.OTH)],
+        "Gravida (Is this your first Pregnancy?)": [request.user.gravida]
+        })
+    prediction = model.predict(data)
+    return bool(prediction[0])
+
 
 class GdmServicer(gdm_pb2_grpc.GdmServicer):
 
@@ -134,6 +155,13 @@ class GdmServicer(gdm_pb2_grpc.GdmServicer):
         user_proto = ParseDict(user, gdm_pb2.User())
         return gdm_pb2.GetUserResponse(
             user=user_proto
+        )
+    
+    def GetDiagnosis(self, request: gdm_pb2.GetDiagnosisRequest, context) -> gdm_pb2.GetDiagnosisResponse:
+        hasGDM = getDiagnosis(request)
+        logging.info("hasGDM: %s", hasGDM)
+        return gdm_pb2.GetDiagnosisResponse(
+            hasGDM= hasGDM
         )
         
 
